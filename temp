@@ -1,0 +1,4 @@
+CREATE TABLE "stocks" ("id" SERIAL PRIMARY KEY NOT NULL, "user" INTEGER, "symbol" TEXT, "shares" INTEGER, "name" TEXT, "price" INTEGER, "total" INTEGER);
+CREATE TABLE "history" ("id" SERIAL PRIMARY KEY NOT NULL, "user" INTEGER, "symbol" TEXT, "shares" INTEGER, "price" INTEGER, "date"  TIMESTAMP DEFAULT CURRENT_TIMESTAMP  );
+CREATE TABLE "users" ("id" SERIAL PRIMARY KEY NOT NULL, "username" TEXT NOT NULL, "hash" TEXT NOT NULL, "cash" NUMERIC DEFAULT 10000);
+CREATE UNIQUE INDEX "username" ON "users" ("username");
