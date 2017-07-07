@@ -37,7 +37,7 @@ db = SQL(os.environ.get("DATABASE_URL") or "sqlite:///finance.db")
 @login_required
 def index():
     # call databases
-    stocks = db.execute("SELECT * FROM stocks where user = :user", user = session["user_id"])
+    stocks = db.execute("SELECT * FROM stocks where \"user\" = :user", user = session["user_id"])
     users = db.execute("SELECT * FROM users where id = :id", id = session["user_id"])
     
     # calculate total price
@@ -73,7 +73,7 @@ def buy():
             return apology("invalid symbol")
         
         # call database    
-        stocks = db.execute("SELECT * FROM stocks WHERE symbol = :symbol AND user = :user", symbol=sym["symbol"], user=session["user_id"])
+        stocks = db.execute("SELECT * FROM stocks WHERE symbol = :symbol AND \"user\" = :user", symbol=sym["symbol"], user=session["user_id"])
         users = db.execute("SELECT * FROM users where id = :id", id = session["user_id"])
         
         # checks if user has enough money
@@ -130,7 +130,7 @@ def history():
     """Show history of transactions."""
     
     # order history for user by descending date
-    history = db.execute("SELECT * FROM history WHERE user = :user ORDER BY date DESC",
+    history = db.execute("SELECT * FROM history WHERE \"user\" = :user ORDER BY date DESC",
     user=session["user_id"]
     )
     
@@ -271,7 +271,7 @@ def sell():
             return apology("invalid symbol")
             
         # call databases
-        stocks = db.execute("SELECT * FROM stocks WHERE symbol = :symbol AND user = :user", symbol=sym["symbol"], user=session["user_id"])
+        stocks = db.execute("SELECT * FROM stocks WHERE symbol = :symbol AND \"user\" = :user", symbol=sym["symbol"], user=session["user_id"])
         users = db.execute("SELECT * FROM users where id = :id", id = session["user_id"])
         
         # checks if symbol exists in database
