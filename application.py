@@ -90,7 +90,7 @@ def buy():
         # checks if symbol exists in database, and adds it if it doesn't
         if len(stocks) == 0:
             
-            db.execute("INSERT INTO 'stocks' (user, symbol, shares, name, price, total) VALUES (:user, :symbol, :shares, :name, :price, :total)", 
+            db.execute("INSERT INTO  \"stocks \" (user, symbol, shares, name, price, total) VALUES (:user, :symbol, :shares, :name, :price, :total)", 
                 symbol = sym["symbol"], 
                 shares = request.form.get("shares"), 
                 user = session["user_id"],
@@ -109,7 +109,7 @@ def buy():
         )
         
         # update history
-        db.execute("INSERT INTO 'history' (user, symbol, shares, price) VALUES(:user, :symbol, :shares, :price)",
+        db.execute("INSERT INTO  \"history \" (user, symbol, shares, price) VALUES(:user, :symbol, :shares, :price)",
         user = session["user_id"],
         symbol = sym["symbol"],
         shares = request.form.get("shares"),
@@ -237,7 +237,7 @@ def register():
             
         # add username and password to database
         hash = pwd_context.hash(request.form.get("password"))
-        id = db.execute("INSERT INTO 'users' (username, hash) VALUES (:username, :password)", username = request.form.get("username"), password=hash)
+        id = db.execute("INSERT INTO \"users\" (username, hash) VALUES (:username, :password)", username = request.form.get("username"), password=hash)
         
         # remember which user has registered
         session["user_id"]=id
@@ -298,7 +298,7 @@ def sell():
         )
         
         # update history
-        db.execute("INSERT INTO 'history' (user, symbol, shares, price) VALUES(:user, :symbol, :shares, :price)",
+        db.execute("INSERT INTO  \"history \" (user, symbol, shares, price) VALUES(:user, :symbol, :shares, :price)",
         user = session["user_id"],
         symbol = sym["symbol"],
         shares = float("-" + request.form.get("shares")),
@@ -337,7 +337,7 @@ def deposit():
         )
         
         # update history
-        db.execute("INSERT INTO 'history' (user, symbol, shares, price) VALUES(:user, :symbol, :shares, :price)",
+        db.execute("INSERT INTO  \"history \" (user, symbol, shares, price) VALUES(:user, :symbol, :shares, :price)",
         user = session["user_id"],
         symbol = "DEPOSIT",
         shares = 0,
