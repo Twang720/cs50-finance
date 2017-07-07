@@ -46,7 +46,7 @@ def index():
     for i in range(len(stocks)):
         total += stocks[i]["total"]
         i += 1
-    cash = users[0]["cash"]
+    cash = float(users[0]["cash"])
     
     # display home page
     return render_template("index.html", stocks = stocks, cash = cash, total = total)
@@ -77,13 +77,13 @@ def buy():
         users = db.execute("SELECT * FROM users where id = :id", id = session["user_id"])
         
         # checks if user has enough money
-        if share*sym["price"] > users[0]["cash"]:
+        if share*sym["price"] > float(users[0]["cash"]):
             return apology("not enough money")
             
         # else pays cash
         else:
             db.execute("UPDATE users SET cash = :cash WHERE id = :id",
-            cash = users[0]["cash"]-float(request.form.get("shares"))*sym["price"],
+            cash = float(users[0]["cash"])-float(request.form.get("shares"))*sym["price"],
             id = session["user_id"]
             )
         
@@ -294,7 +294,7 @@ def sell():
         # user recieves cash
         db.execute("UPDATE users SET cash = :cash WHERE id = :id",
         id = session["user_id"],
-        cash = users[0]["cash"]+float(request.form.get("shares"))*sym["price"]
+        cash = float(users[0]["cash"])+float(request.form.get("shares"))*sym["price"]
         )
         
         # update history
